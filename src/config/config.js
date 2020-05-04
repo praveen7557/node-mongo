@@ -25,6 +25,11 @@ const envVarsSchema = Joi.object()
     EMAIL_FROM: Joi.string().description(
       "the from field in the emails sent by the app"
     ),
+    GOOGLE_CLIENT_ID: Joi.string().description("Google login client id"),
+    GOOGLE_CLIENT_SECRET: Joi.string().description(
+      "Google login client secret"
+    ),
+    GOOGLE_CALLBACK_URL: Joi.string().description("Google login callback URL"),
   })
   .unknown();
 
@@ -52,6 +57,11 @@ module.exports = {
     accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
     refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
     resetPasswordExpirationMinutes: 10,
+  },
+  google: {
+    clientId: envVars.GOOGLE_CLIENT_ID,
+    clientSecret: envVars.GOOGLE_CLIENT_SECRET,
+    callbackUrl: envVars.GOOGLE_CALLBACK_URL,
   },
   email: {
     smtp: {

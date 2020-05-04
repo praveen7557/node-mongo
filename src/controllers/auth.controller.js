@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const catchAsync = require('../utils/catchAsync');
-const { authService, userService, emailService } = require('../services');
+const httpStatus = require("http-status");
+const catchAsync = require("../utils/catchAsync");
+const { authService, userService, emailService } = require("../services");
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -16,6 +16,16 @@ const login = catchAsync(async (req, res) => {
   res.send(response);
 });
 
+const googleLogin = catchAsync(async (req, res) => {
+  const user = await userService.googleLogin({
+    name: req.user.profile.displayName,
+    email: req.user.profile.emails[0].value,
+  });
+  const tokens = await authService.generateAuthTokens(user.id);
+  const response = { user: user.transform(), tokens };
+  res.send(response);
+});
+
 const refreshTokens = catchAsync(async (req, res) => {
   const tokens = await authService.refreshAuthTokens(req.body.refreshToken);
   const response = { ...tokens };
@@ -23,7 +33,9 @@ const refreshTokens = catchAsync(async (req, res) => {
 });
 
 const forgotPassword = catchAsync(async (req, res) => {
-  const resetPasswordToken = await authService.generateResetPasswordToken(req.body.email);
+  const resetPasswordToken = await authService.generateResetPasswordToken(
+    req.body.email
+  );
   await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken);
   res.status(httpStatus.NO_CONTENT).send();
 });
@@ -39,4 +51,5 @@ module.exports = {
   refreshTokens,
   forgotPassword,
   resetPassword,
+  googleLogin,
 };
