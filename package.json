@@ -6,8 +6,7 @@
   "author": "Praveen Bolla <praveenb0800@gmail.com>",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "test": "env-cmd -f ./test.env jest --watch"
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
