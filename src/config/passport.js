@@ -1,5 +1,6 @@
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
 const config = require("./config");
 const { User } = require("../models");
@@ -44,7 +45,23 @@ const googleStrategy = new GoogleStrategy(
   }
 );
 
+const facebookStrategy = new FacebookStrategy(
+  {
+    clientID: config.facebook.clientId,
+    clientSecret: config.facebook.clientSecret,
+    callbackURL: config.facebook.callbackUrl,
+    profileFields: ["id", "emails", "name"],
+  },
+  async (token, refreshToken, profile, done) => {
+    return done(null, {
+      profile: profile,
+      token: token,
+    });
+  }
+);
+
 module.exports = {
   jwtStrategy,
   googleStrategy,
+  facebookStrategy,
 };

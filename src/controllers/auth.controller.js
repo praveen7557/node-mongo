@@ -18,7 +18,9 @@ const login = catchAsync(async (req, res) => {
 
 const googleLogin = catchAsync(async (req, res) => {
   const user = await userService.googleLogin({
-    name: req.user.profile.displayName,
+    name:
+      req.user.profile.displayName ||
+      req.user.profile.name.givenName + " " + req.user.profile.name.familyName,
     email: req.user.profile.emails[0].value,
   });
   const tokens = await authService.generateAuthTokens(user.id);

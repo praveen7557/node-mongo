@@ -30,6 +30,13 @@ const envVarsSchema = Joi.object()
       "Google login client secret"
     ),
     GOOGLE_CALLBACK_URL: Joi.string().description("Google login callback URL"),
+    FACEBOOK_CLIENT_ID: Joi.string().description("Facebook login client id"),
+    FACEBOOK_CLIENT_SECRET: Joi.string().description(
+      "Facebook login client secret"
+    ),
+    FACEBOOK_CALLBACK_URL: Joi.string().description(
+      "Facebook login callback URL"
+    ),
   })
   .unknown();
 
@@ -62,6 +69,11 @@ module.exports = {
     clientId: envVars.GOOGLE_CLIENT_ID,
     clientSecret: envVars.GOOGLE_CLIENT_SECRET,
     callbackUrl: envVars.GOOGLE_CALLBACK_URL,
+  },
+  facebook: {
+    clientId: envVars.FACEBOOK_CLIENT_ID,
+    clientSecret: envVars.FACEBOOK_CLIENT_SECRET,
+    callbackUrl: envVars.FACEBOOK_CALLBACK_URL,
   },
   email: {
     smtp: {

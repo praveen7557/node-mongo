@@ -17,12 +17,13 @@ const googleLogin = async (userBody) => {
   if (user) {
     return user;
   } else {
+    let password = generator.generate({
+      length: 10,
+      numbers: true,
+    });
     user = await User.create({
       ...userBody,
-      password: generator.generate({
-        length: 10,
-        numbers: true,
-      }),
+      password,
     });
     return user;
   }
