@@ -17,6 +17,7 @@ It comes with many built-in features, such as authentication using JWT, request 
 - **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
 - **Santizing**: sanitize request data against xss and query injection
 - **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
+- **Social Login**: Login with Google and Facebook
 
 ## Getting Started
 
