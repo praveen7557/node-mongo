@@ -1,14 +1,14 @@
-const httpStatus = require("http-status");
-const { pick } = require("lodash");
-const AppError = require("../utils/AppError");
-const { User } = require("../models");
-const { getQueryOptions } = require("../utils/service.util");
-const generator = require("generate-password");
+const httpStatus = require('http-status');
+const { pick } = require('lodash');
+const generator = require('generate-password');
+const AppError = require('../utils/AppError');
+const { User } = require('../models');
+const { getQueryOptions } = require('../utils/service.util');
 
 const checkDuplicateEmail = async (email, excludeUserId) => {
   const user = await User.findOne({ email, _id: { $ne: excludeUserId } });
   if (user) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Email already taken");
+    throw new AppError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 };
 
@@ -16,17 +16,16 @@ const googleLogin = async (userBody) => {
   let user = await User.findOne({ email: userBody.email });
   if (user) {
     return user;
-  } else {
-    let password = generator.generate({
-      length: 10,
-      numbers: true,
-    });
-    user = await User.create({
-      ...userBody,
-      password,
-    });
-    return user;
   }
+  const password = generator.generate({
+    length: 10,
+    numbers: true,
+  });
+  user = await User.create({
+    ...userBody,
+    password,
+  });
+  return user;
 };
 
 const createUser = async (userBody) => {
@@ -36,7 +35,7 @@ const createUser = async (userBody) => {
 };
 
 const getUsers = async (query) => {
-  const filter = pick(query, ["name", "role"]);
+  const filter = pick(query, ['name', 'role']);
   const options = getQueryOptions(query);
   const users = await User.find(filter, null, options);
   return users;
@@ -45,7 +44,7 @@ const getUsers = async (query) => {
 const getUserById = async (userId) => {
   const user = await User.findById(userId);
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
   return user;
 };
@@ -53,7 +52,7 @@ const getUserById = async (userId) => {
 const getUserByEmail = async (email) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, "No user found with this email");
+    throw new AppError(httpStatus.NOT_FOUND, 'No user found with this email');
   }
   return user;
 };

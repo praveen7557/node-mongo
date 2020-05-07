@@ -7,7 +7,7 @@ const userService = require('./user.service');
 const Token = require('../models/token.model');
 const AppError = require('../utils/AppError');
 
-const generateAuthTokens = async userId => {
+const generateAuthTokens = async (userId) => {
   const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
   const accessToken = tokenService.generateToken(userId, accessTokenExpires);
 
@@ -44,7 +44,7 @@ const loginUser = async (email, password) => {
   }
 };
 
-const refreshAuthTokens = async refreshToken => {
+const refreshAuthTokens = async (refreshToken) => {
   try {
     const refreshTokenDoc = await tokenService.verifyToken(refreshToken, 'refresh');
     const userId = refreshTokenDoc.user;
@@ -56,7 +56,7 @@ const refreshAuthTokens = async refreshToken => {
   }
 };
 
-const generateResetPasswordToken = async email => {
+const generateResetPasswordToken = async (email) => {
   const user = await userService.getUserByEmail(email);
   const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
   const resetPasswordToken = tokenService.generateToken(user._id, expires);
