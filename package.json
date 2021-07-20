@@ -5,13 +5,12 @@
   "main": "src/index.js",
   "author": "Praveen Bolla <praveenb0800@gmail.com>",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "start": "yarn lint && node src/index.js",
+    "dev": "yarn lint && nodemon src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
@@ -24,6 +23,7 @@
     "generate-password": "^1.5.1",
     "helmet": "^3.22.0",
     "http-status": "^1.4.2",
+    "joi": "^17.4.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.11",

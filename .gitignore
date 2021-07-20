@@ -21,3 +21,5 @@ jspm_packages/
 .npm
 
 .env
+
+.vscode

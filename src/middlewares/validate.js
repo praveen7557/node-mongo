@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 const httpStatus = require('http-status');
 const { pick } = require('lodash');
 const AppError = require('../utils/AppError');
