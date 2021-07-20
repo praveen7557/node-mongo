@@ -1,4 +1,4 @@
-const moment = require('moment');
+const dayjs = require('dayjs');
 const bcrypt = require('bcryptjs');
 const httpStatus = require('http-status');
 const config = require('../config/config');
@@ -8,10 +8,10 @@ const Token = require('../models/token.model');
 const AppError = require('../utils/AppError');
 
 const generateAuthTokens = async (userId) => {
-  const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+  const accessTokenExpires = dayjs().add(config.jwt.accessExpirationMinutes, 'minutes');
   const accessToken = tokenService.generateToken(userId, accessTokenExpires);
 
-  const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
+  const refreshTokenExpires = dayjs().add(config.jwt.refreshExpirationDays, 'days');
   const refreshToken = tokenService.generateToken(userId, refreshTokenExpires);
   await tokenService.saveToken(refreshToken, userId, refreshTokenExpires, 'refresh');
 
@@ -58,7 +58,7 @@ const refreshAuthTokens = async (refreshToken) => {
 
 const generateResetPasswordToken = async (email) => {
   const user = await userService.getUserByEmail(email);
-  const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
+  const expires = dayjs().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
   const resetPasswordToken = tokenService.generateToken(user._id, expires);
   await tokenService.saveToken(resetPasswordToken, user._id, expires, 'resetPassword');
   return resetPasswordToken;

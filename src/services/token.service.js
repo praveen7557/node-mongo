@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const moment = require('moment');
+const dayjs = require('dayjs');
 const httpStatus = require('http-status');
 const config = require('../config/config');
 const { Token } = require('../models');
@@ -8,7 +8,7 @@ const AppError = require('../utils/AppError');
 const generateToken = (userId, expires, secret = config.jwt.secret) => {
   const payload = {
     sub: userId,
-    iat: moment().unix(),
+    iat: dayjs().unix(),
     exp: expires.unix(),
   };
   return jwt.sign(payload, secret);
